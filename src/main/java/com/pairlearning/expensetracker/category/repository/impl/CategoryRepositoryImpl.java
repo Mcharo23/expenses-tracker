@@ -39,6 +39,9 @@ public class CategoryRepositoryImpl implements CategoryRepository {
 
     private static final String SQL_CREATE = "INSERT INTO categories (category_id, user_id, title, description) VALUES(NEXTVAL('et_categories_seq'), ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE categories SET title = ?, description = ? WHERE user_id = ? AND category_id = ?";
+    private static final String SQL_DELETE_GATEWAY = "DELETE FROM categories WHERE user_id = ? AND category_id = ?";
+    private static final String SQL_DELETE_ALL_TRANSACTIONS = "DELETE FROM et_transactions " +
+            "WHERE category_id = ?";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -88,8 +91,20 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public void removeById(Integer userId, Integer categoryId) {
+    public boolean removeById(Integer userId, Integer categoryId) throws CategoryNotFoundException {
+        try {
+            this.removeAllCatTransactions(categoryId);
+            jdbcTemplate.update(SQL_DELETE_GATEWAY, new Object[]{userId, categoryId});
+            return true;
+        } catch (Exception e) {
+            throw new CategoryNotFoundException("Category not found: " + e.getMessage());
+        }
 
+
+    }
+
+    private void removeAllCatTransactions(Integer categoryId) {
+        jdbcTemplate.update(SQL_DELETE_ALL_TRANSACTIONS, new Object[]{categoryId});
     }
 
     private final RowMapper<Category> categoryRowMapper = ((rs, rowNum) -> {

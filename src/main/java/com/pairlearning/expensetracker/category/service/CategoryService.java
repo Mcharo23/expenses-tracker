@@ -12,5 +12,5 @@ public interface CategoryService {
     CategoryDto fetchCategoryById(Integer userId, Integer categoryId) throws CategoryNotFoundException;
     CategoryDto addCategory(Integer userId, CategoryDto categoryDto) throws BadRequestException;
     void updateCategory(Integer userId, Integer categoryID, CategoryDto categoryDto) throws BadRequestException;
-    void removeCategoryWithAllTransactions(Integer userId, Integer categoryId) throws CategoryNotFoundException;
+    boolean removeCategoryWithAllTransactions(Integer userId, Integer categoryId) throws CategoryNotFoundException;
 }

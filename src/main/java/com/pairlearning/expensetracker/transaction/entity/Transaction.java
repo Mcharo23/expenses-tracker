@@ -3,11 +3,15 @@ package com.pairlearning.expensetracker.transaction.entity;
 import com.pairlearning.expensetracker.category.entity.Category;
 import com.pairlearning.expensetracker.user.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "et_transactions")
 public class Transaction {

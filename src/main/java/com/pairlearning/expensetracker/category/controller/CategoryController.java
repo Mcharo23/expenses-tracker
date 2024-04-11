@@ -18,6 +18,17 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+    @DeleteMapping("{categoryId}")
+    public ResponseEntity<Map<String, Boolean>> removeCategoryWithAllTransactions(HttpServletRequest request,
+                                                                                  @PathVariable("categoryId") Integer categoryId) {
+        boolean success = categoryService.removeCategoryWithAllTransactions(getUserId(request), categoryId);
+
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("success", success);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
     @PostMapping("/add-category")
     public ResponseEntity<CategoryDto> addCategory(HttpServletRequest request,
                                                    @RequestBody CategoryDto categoryDto) {

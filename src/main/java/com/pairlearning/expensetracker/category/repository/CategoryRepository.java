@@ -12,5 +12,5 @@ public interface CategoryRepository {
     Category findById(Integer userId, Integer categoryId) throws CategoryNotFoundException;
     Integer create(Integer userId, Category category) throws BadRequestException;
     void update(Integer userId, Integer categoryID, Category category) throws BadRequestException;
-    void removeById(Integer userId, Integer categoryId);
+    boolean removeById(Integer userId, Integer categoryId) throws CategoryNotFoundException;
 }

@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void removeCategoryWithAllTransactions(Integer userId, Integer categoryId) throws CategoryNotFoundException {
-
+    public boolean removeCategoryWithAllTransactions(Integer userId, Integer categoryId) throws CategoryNotFoundException {
+        return categoryRepository.removeById(userId, categoryId);
     }
 }
